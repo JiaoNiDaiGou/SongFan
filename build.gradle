@@ -1,0 +1,23 @@
+apply plugin: 'idea'
+
+allprojects {
+    version = '1.0'
+    group = 'SongFan'
+
+    repositories {   // repositories for Jar's you access in your code
+        google()
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            // Use ./gradlew :api:dependencyInsight --configuration compile --dependency <dependency> -PdebugDeps
+            // to check dependencies
+            if (!project.hasProperty('debugDeps')) {
+                failOnVersionConflict()
+            }
+        }
+    }
+}
