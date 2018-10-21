@@ -1,0 +1,5 @@
+runtime: nodejs8
+service: songfan-page
+api_version: dev
+
+instance_class: F2

@@ -1,35 +1,29 @@
 import React, { Component } from "react";
-import { callBackend } from "../backend.js";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { loadMenu } from "../actions/actions";
+import { loadMenu, getClientToken, selectDishes } from "../actions/actions";
 
 class Menu extends Component {
   constructor(props) {
     super(props);
     this.goToCart = this.goToCart.bind(this);
-    this.state = {
-      menu: null
-    };
   }
 
   componentDidMount() {
-    callBackend("GET", "/api/menus/a").then(res => {
-      this.setState({
-        menu: res
-      });
-    });
+    var { loadMenu, getClientToken } = this.props;
+    loadMenu();
+    getClientToken();
   }
 
   goToCart(e) {
     var dishId = e.currentTarget.dataset.dishid;
-    console.log("order: " + dishId);
-    this.props.history.push("/Cart?dishid=" + dishId);
+    this.props.selectDishes([dishId]);
+    this.props.history.push("/Cart");
   }
 
   render() {
-    var menu = this.state.menu;
-    if (!!menu) {
+    var { menu } = this.props;
+    if (menu) {
       var menuItems = menu.menuEntries.map(t => {
         return (
           <div key={t.dish.id}>
@@ -55,10 +49,14 @@ class Menu extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({});
+const mapStateToProps = (state, ownProps) => ({
+  menu: state.main.menu
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onLoadMenu: () => dispatch(loadMenu())
+  loadMenu: () => dispatch(loadMenu()),
+  getClientToken: () => dispatch(getClientToken()),
+  selectDishes: selectedDishIds => dispatch(selectDishes(selectedDishIds))
 });
 
 export default connect(
