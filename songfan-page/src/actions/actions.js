@@ -12,9 +12,9 @@ const SERVER = 'https://dev-dot-songfan-dot-fluid-crane-200921.appspot.com'
 export const loadMenu = () => backendAction(LOAD_MENU, 'GET', '/api/menus/test')
 export const initOrder = (request, callback) => backendAction(INIT_ORDER, 'POST', '/api/orders/init', request, callback)
 export const getClientToken = () => backendAction(GET_CLIENT_TOKEN, 'GET', '/api/orders/braintreeClientToken')
-export const selectDishes = (dishIds) => ({
+export const selectDishes = (dishes) => ({
   type: SELECT_DISHES,
-  res: dishIds
+  res: dishes
 })
 
 const backendAction = (actionName, verb, path, data, callbackOnSuccess) => {

@@ -1,7 +1,5 @@
 import {
-  REQ,
   SUCCESS,
-  ERROR,
   LOAD_MENU,
   GET_CLIENT_TOKEN,
   SELECT_DISHES,
@@ -29,7 +27,7 @@ const getClientToken = (state = null, action) => {
   }
 }
 
-const selectDishes = (state = null, action) => {
+const selectDishes = (state = {}, action) => {
   switch (action.type) {
     case SELECT_DISHES:
       return action.res
@@ -51,7 +49,7 @@ const mainReducer = combineReducers({
   menu: loadMenu,
   order: initOrder,
   braintreeClientToken: getClientToken,
-  selectedDishIds: selectDishes
+  selectedDishes: selectDishes
 })
 
 export default mainReducer;
